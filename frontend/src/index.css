@@ -1,0 +1,267 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ccc;
+  width: 100%;
+  min-height: 100vh;
+}
+.message{
+  color: red;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: bolder;
+  font-style: italic;
+}
+.header {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.person{
+  font-size: 2px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-container {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.input-container input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 26px;
+  outline: none;
+}
+
+
+
+
+
+
+
+
+.intro{
+  width: 100%;
+  height: 75px;
+  background-color: rgba(0, 128, 0, 0.533);
+  margin-bottom: 10px;
+}
+
+.intro p{
+  color: whitesmoke;
+  font-size: 22px;
+}
+.books p{
+  color: black;
+}
+.books span{
+  color: green;
+  
+}
+a{
+  text-decoration: none;
+  cursor: none;
+  color: #0056b3;
+  font-size: 18px;
+}
+.searchcont{
+  text-align: center;
+}
+.searchcont input{
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 26px;
+  outline: none;
+}
+.searchcont i{
+  font-size: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.categories{
+width: 100%;
+height: 70px;
+background-color: honeydew;
+text-align: center;
+}
+.categories i{
+  visibility: hidden;
+}
+
+.categories li{
+  padding-left: 22px;
+  font-size: 20px;
+  cursor: pointer;
+  
+}
+.categories-title strong{
+color: blue;
+text-align: center;
+font-size: 25px;
+}
+.title strong{
+  font-size: 26px;
+  font-weight: bolder;
+  font-style: oblique;
+}
+
+.pj i{
+
+  font-size: 50px;
+  color: forestgreen;
+}
+.login p{
+  font-size: 17.767676767676776px;
+  cursor: pointer;
+}
+.pj{
+  text-align: center;
+  width: 100%;
+  height: 177px;
+  background-color: #ccc;
+}
+
+
+.fantasy{
+  text-align: center;
+  text-overflow: ellipsis;
+  text-decoration: underline;
+}
+
+
+.bookscompo {
+  display: inline-block; 
+  margin-top: 10px; 
+  padding-left: 10px; 
+  border: 1px solid #ddd; 
+  width: 200px; 
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.bookscompo img {
+  max-width: 100%; 
+}
+
+
+
+
+
+
+
+
+
+
+
+.checkbox-label {
+  margin-left: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error-msg {
+  color: red;
+  margin-top: 10px;
+}
+
+.success-msg {
+  color: green;
+  margin-top: 10px;
+}
+.categories ul{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+}
+@media (max-width: 800px) {
+  .container {
+    width: 100%;
+  }
+  .categories ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    flex-direction: row;
+  
+  }
+
+  .input-container input {
+    width: 100%; 
+  }
+  .books img{
+    width: 79%;
+    height: 450px;
+    
+  }
+  .categories i{
+    visibility: visible;
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+  }
+  .categories {
+    height: auto; 
+    position: relative;
+  }
+
+  .categories li {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-left: 10px; 
+  }
+  .title strong {
+    font-size: 20px; /* Adjust font size for titles */
+  }
+
+  .bookscompo {
+    width: 100%; /* Make the book components take up full width */
+    margin: 10px 0; /* Adjust margin between books */
+  }
+
+  .intro {
+    height: auto; /* Adjust the height to auto for smaller screens */
+  }
+
+  .intro p {
+    font-size: 18px; /* Reduce font size for intro text */
+  }
+
+  .searchcont input {
+    width: 100%; /* Make the search input take up the full width */
+  }
+
+  .pj i {
+    font-size: 40px; /* Reduce font size for icons */
+  }
+
+  .login p {
+    font-size: 16px; /* Reduce font size for login text */
+  }
+}
