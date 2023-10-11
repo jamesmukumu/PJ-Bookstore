@@ -6,19 +6,21 @@ import {FcSearch} from "react-icons/fc"
 import {BsPersonSquare} from "react-icons/bs"
 import {VscThreeBars} from "react-icons/vsc"
 import { Link } from "react-router-dom"
-
+import Preloader from "./preloader"
 function Navigation(){
     const [isVisible, setIsVisible] = useState(false);
 const [countedbooks,setCountedbooks] = useState([])
 const [booksdata,setBooksdata] = useState([])
 const  [searchedbook,setSearchedbook] = useState([])
 const  [inputbookname,setInputbookname]= useState('')
-
+const [loading,setLoading] = useState(true)
+const  [notFound,setNotfound] = useState('')
 useEffect(()=>{
 async function fetchallBooks(){
-const response = await axios.get('http://localhost:5000/allbooks')
+const response = await axios.get('https://bookstore-kamy.onrender.com/allbooks')
 if(response.data.message==='all books fetched'){
 setBooksdata(response.data.data)
+setLoading(false)
 }
 else{
     setBooksdata(null)
@@ -38,16 +40,17 @@ fetchallBooks()
 //search books based on title
 async function searchBookontitle(){
 try {
-const response  = await axios.get('http://localhost:5000/get/basedontitle',{
+const response  = await axios.get('https://bookstore-kamy.onrender.com/get/basedontitle',{
 params:{
     bookTitle:inputbookname
 }
 })
 if(response.data.message==='book found'){
 setSearchedbook(response.data.data)
+
 }
 else{
-    setSearchedbook('No Books Found based on your search')
+    setNotfound('No Books Found based on your search')
 }
    
 } catch (error) {
@@ -60,7 +63,7 @@ else{
 useEffect(()=>{
     async function Countallbooks(){
         try {
-        const response = await axios.get('http://localhost:5000/count/allbooks')    
+        const response = await axios.get('https://bookstore-kamy.onrender.com/count/allbooks')    
         if(response.data.message==='all books'){
         setCountedbooks(response.data.data)
         }
@@ -129,11 +132,17 @@ return(
 
 
 
-
 <div className="intro">
 <p>Welcome and thankyou for visitng us.For any query Call us on 0759857032 or Email jamesmukumu03@gmail.com</p>
 <p>&copy;James Mukumu 2023</p>
 </div>
+
+
+
+
+
+
+
 
 
    <div className="categories">
@@ -171,7 +180,7 @@ return(
  <i><FcSearch onClick={searchBookontitle}/> </i>  
 
 </div>
- 
+ <p className="message">{notFound}</p>
 
 <div>
     {searchedbook.map((item)=>(
@@ -193,10 +202,10 @@ return(
 
 
 
-
-
-
-<div className="allbooks">
+{loading?(
+    <Preloader/>
+):(
+    <div className="allbooks">
 {booksdata.map((item)=>(
 <div className="bookscompo">
     <div className="books">
@@ -215,6 +224,12 @@ return(
 
 
 </div>
+
+
+)}
+
+
+
 
 
 

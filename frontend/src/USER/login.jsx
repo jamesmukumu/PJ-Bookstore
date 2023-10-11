@@ -5,7 +5,7 @@ import {ImBooks} from "react-icons/im"
 import {BsPersonSquare} from "react-icons/bs"
 import "../index.css"
 import { Link } from "react-router-dom";
-
+import Preloader from "../preloader";
 
 import { useNavigate } from "react-router-dom";
 
@@ -17,8 +17,9 @@ import { useNavigate } from "react-router-dom";
 function Loginuser(){
     let navigate = useNavigate()
 const [password,setPassword] = useState('')
+const [sucessmsg,setSuccessmsg] = useState('')
 const [username,setUsername] = useState('')
-const  [sucessmsg,setSucessmsg] = useState('')
+const [loading,setLoading] = useState(false)
 const  [errormsg,setErrormsg] = useState('')
 const  [passwordlength,setPasswordlength] = useState('')
 async function Postuserlogin(e){
@@ -27,17 +28,23 @@ async function Postuserlogin(e){
     }
 e.preventDefault()
 try {
-const response = await axios.post('http://localhost:5000/login',{
+const response = await axios.post('https://bookstore-kamy.onrender.com/login',{
 Password:password,
 Username:username
 })
 if(response.data.message==='Logged in'){
-navigate('/payment')
+    setLoading(true)
+    setSuccessmsg('successfully logged in')
+setTimeout(()=>{
+    navigate('/payment')
+},3000)
 }
 if(response.data.error==='Wrong Password'){
+setLoading(true)
 setErrormsg('Invalid password or email')
 }
 if(response.data.message=='Username Not in the DB'){
+    setLoading(true)
 setErrormsg('Account does not exist...')
 }
     
@@ -67,13 +74,9 @@ return(
 </div>
 
 
-
-
-
-
-
-
-    <form onSubmit={Postuserlogin}>
+{loading?(
+    <Preloader/>):(
+<form onSubmit={Postuserlogin}>
      <div className="input-container">
         <input type="text" onChange={(e)=>setUsername(e.target.value)} required placeholder="Enter Username"/>
      </div>
@@ -81,10 +84,32 @@ return(
         <input type="password" onChange={(e)=>setPassword(e.target.value)} required placeholder="Enter Password"/>
      </div>
      <button>Sign in</button>
-     <p className="message">{errormsg}</p>
+
+
+
     
+
+
+
+
+
+
+
+     <p className="message">{errormsg}</p>
+     <p className="message">{sucessmsg}</p>
      <p className="message">{passwordlength}</p>
     </form>
+
+
+
+    )
+}
+
+
+
+
+
+    
 
   
 

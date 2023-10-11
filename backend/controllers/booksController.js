@@ -59,7 +59,7 @@ async function getBookontitle(req, res) {
 async function getBooksonCategory(req,res){
 try {
 const filteredCategory = req.query.Category
-const matchingCategory = await Book.findAll({where:{Category:filteredCategory}})
+const matchingCategory = await Book.findAll({where:{Category:{[Sequelize.Op.iLike]:`%${filteredCategory}%`}}})
 if(matchingCategory.length===0){
   return res.json({error:'Books cannot be Found based on this category'})
 }
@@ -91,15 +91,23 @@ async function countallBooks(req, res) {
 async function countallbooksCategory(req,res){
 try {
 const wantedCategory = req.query.Category
-const countBooks = await Book.count({where:{Category:wantedCategory}})
-res.json({message:'books on this category are',data:countBooks})
+const countBooks = await Book.count({where:{Category:{[Sequelize.Op.iLike]:`%${wantedCategory}%`}}})
+if(countBooks===0){
+return res.status(200).json({message:"No books found on this category"})
+}
+else{
+  return res.status(200).json({message:"Books on this category are",data:countBooks})
+}
+
+
+
 } catch (error) {
   res.json({error:'Error in Counting Documents'})
 }
 }
 
 
-
+ 
 //delete a book in db based on bookTitle
 
 async function deleteBook(req,res){

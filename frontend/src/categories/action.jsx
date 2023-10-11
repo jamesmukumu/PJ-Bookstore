@@ -4,8 +4,10 @@ import "../index.css"
 import {FcSearch} from "react-icons/fc" 
 import {ImBooks} from "react-icons/im"
 import { Link } from "react-router-dom"
+import Preloader from "../preloader"
 
 function Actioncategory(){
+const [loading,setLoading] = useState(true)
 const [mycategory,setMycategory] = useState('Action')
 const [booksdata,setBooksdata] = useState([])
 const  [searchedbook,setSearchedbook] = useState([])
@@ -14,14 +16,16 @@ const  [inputbookname,setInputbookname]= useState('')
 useEffect(()=>{
     async function fetchBooksoncat(){
         try {
-        const response = await axios.get('http://localhost:5000/get/oncategory',{
+        const response = await axios.get('https://bookstore-kamy.onrender.com/get/oncategory',{
             params:{Category:mycategory}
         })
         if(response.data.message==='All books in the db'){
         setBooksdata(response.data.data)
+        setLoading(false)
         }
         else{
         setBooksdata(null)
+        setLoading(false)
         }
            
         } catch (error) {
@@ -40,7 +44,7 @@ useEffect(()=>{
 //Searchbook
 async function searchBookontitle(){
     try {
-    const response  = await axios.get('http://localhost:5000/get/basedontitle',{
+    const response  = await axios.get('https://bookstore-kamy.onrender.com/get/basedontitle',{
     params:{
         bookTitle:inputbookname
     }
@@ -131,14 +135,9 @@ return(
 
 
 
-
-
-
-
-
-
-
-
+{loading?(
+    <Preloader/>
+):(
 <div>
     {booksdata.map((item)=>(
      <div className="bookscompo">
@@ -153,6 +152,18 @@ return(
      </div>
     ))}
 </div>
+
+
+
+
+)}
+
+
+
+
+
+
+
 
 
 

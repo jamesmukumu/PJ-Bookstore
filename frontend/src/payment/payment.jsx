@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import "../index.css"
+import Preloader from "../preloader";
 import {ImBooks} from "react-icons/im"
 function Postpayment(){
 const [Firstname,setFirstname] = useState('')
@@ -9,7 +10,7 @@ const [Secondname,setSecondname] = useState('')
 const [Phonenumber,setPhonenumber] = useState('')
 const [Email,setEmail] = useState('')
 const [paymentURL,setPaymenturl] = useState([])
-
+const [loading,setLoading] = useState(true)
 
 
 
@@ -17,7 +18,7 @@ const [paymentURL,setPaymenturl] = useState([])
 async function postpaymentdb(e){
 e.preventDefault()
 try {
-const response = await axios.post('http://localhost:5000/post/payment',{
+const response = await axios.post('https://bookstore-kamy.onrender.com/post/payment',{
 first_name:Firstname,
 last_name:Secondname,
 phone_number:Phonenumber,
@@ -25,7 +26,10 @@ email:Email
 })
 if(response.data.message=='Data sent to Database'){
     setPaymenturl(response.data.data)
-    window.location.href= response.data.data
+    setLoading(false)
+    setTimeout(()=>{
+      window.location.href= response.data.data
+    },3400)
     
 }
 else{

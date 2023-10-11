@@ -6,9 +6,12 @@ import {ImBooks} from "react-icons/im"
 import {BsPersonSquare} from "react-icons/bs"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
-
+import Preloader from "../preloader"
 function Registeruser(){
-    let navigate = useNavigate()
+let navigate = useNavigate()
+
+const [loading,setLoading] = useState(false)
+
 const [Firstname,setFirstname] = useState('')
 const [Secondname,setSecondname] = useState('')
 const [password,setPassword] = useState('')
@@ -27,7 +30,7 @@ async function Postregistrationinfo(e){
         }
 e.preventDefault()
 try {
-const response = await axios.post('http://localhost:5000/post/student',{
+const response = await axios.post('https://bookstore-kamy.onrender.com/post/student',{
 firstname:Firstname,
 secondname:Secondname,
 Password:password,
@@ -35,10 +38,14 @@ Email:email,
 Username:username
 })
 if(response.data.message==='Student Sent to DB'){
-navigate('/payment')
+  setLoading(true)
+setTimeout(()=>{
+  navigate('/payment')
+},3000)
 }
 if(response.data.message==='Email Or username already exists..Try different one'){
 setErrormsg('Email or Username already in the database.Try using a different one')
+setLoading(true)
 }
 
 } catch (error) {
@@ -72,33 +79,40 @@ return(
 
 
 
+{loading?(
+<Preloader/>):(
+  <form onSubmit={Postregistrationinfo}>
+  <div className="input-container">
+  <input type="text" onChange={(e)=>setFirstname(e.target.value)} placeholder="Enter Firstname" required/>
+  
+  </div>
+  <div className="input-container">
+  <input type="text" onChange={(e)=>setSecondname(e.target.value)} placeholder="Enter Secondname" required/>
+  </div>
+  <div className="input-container">
+  <input type="email" onChange={(e)=>setEmail(e.target.value)} placeholder="Enter Your email.eg abcd@gmail.com" required/>
+  </div>
+  <div className="input-container">
+  <input type="password" onChange={(e)=>setPassword(e.target.value)} placeholder="Enter Password" required/>
+  </div>
+  <div className="input-container">
+  <input type="text" onChange={(e)=>setUsername(e.target.value)} placeholder="Enter Username" rquired/>
+  </div>
+  <button>Sign Up</button>
+  <p className="message">{Errormsg}</p>
+  
+  <p className="message">{passwordlength}</p>
+  </form>
+  
+
+)
+
+
+}
 
 
 
 
-
-<form onSubmit={Postregistrationinfo}>
-<div className="input-container">
-<input type="text" onChange={(e)=>setFirstname(e.target.value)} placeholder="Enter Firstname" required/>
-
-</div>
-<div className="input-container">
-<input type="text" onChange={(e)=>setSecondname(e.target.value)} placeholder="Enter Secondname" required/>
-</div>
-<div className="input-container">
-<input type="email" onChange={(e)=>setEmail(e.target.value)} placeholder="Enter Your email.eg abcd@gmail.com" required/>
-</div>
-<div className="input-container">
-<input type="password" onChange={(e)=>setPassword(e.target.value)} placeholder="Enter Password" required/>
-</div>
-<div className="input-container">
-<input type="text" onChange={(e)=>setUsername(e.target.value)} placeholder="Enter Username" rquired/>
-</div>
-<button>Sign Up</button>
-<p className="message">{Errormsg}</p>
-
-<p className="message">{passwordlength}</p>
-</form>
 
 
 
